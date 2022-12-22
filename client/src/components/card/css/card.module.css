@@ -1,0 +1,34 @@
+.card{
+    width: 330px;
+    height: auto;
+    background-color: rgba(2, 2, 2, 0.474);
+    border-radius: 2rem;
+    margin: 20px;
+    padding: 8px;
+    text-decoration: none;
+}
+
+
+.name{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 1px 1px gray;
+    font-size: 25px;
+    color: black;
+}
+
+.img{
+    width: 270px;
+    height: 200px;
+    border-radius: 15px;
+}
+
+.weight{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+}
+
+.temper{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: black;
+}
+
