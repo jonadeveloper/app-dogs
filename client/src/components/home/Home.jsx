@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { Card } from '../card/Card';
 import style from './css/home.module.css';
 import { Paginated } from '../paginated/Paginated';
+import SearchBar from '../searchBar/SearchBar';
 
 
 export default function Home(){
@@ -59,12 +60,13 @@ export default function Home(){
 
     return(
         <div>
+            <SearchBar />
             <div>
             <button className={style.btn} onClick={(e) => {handleClick(e)}}>Reload</button>
             <Link to="/">
                 <button className={style.btn}>◀ Go back</button>
             </Link>
-            <Link to="/race">
+            <Link to="/create">
                 <button className={style.btn}>Create new race</button>
             </Link>
             </div>

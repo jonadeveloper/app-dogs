@@ -3,7 +3,8 @@ import {GET_RACES,
     GET_TEMPERAMENTS,
     FILTER_OF_TEMPERAMENTS,
     FILTERED_RACES_CREATED,
-    ORDER_BY_NAME} from './const'
+    ORDER_BY_NAME,
+    GET_NAME_RACES} from './const'
 
 export function getRaces(){
     return async function(dispatch){
@@ -45,4 +46,18 @@ export function orderByname(payload){
         type: ORDER_BY_NAME,
         payload
     }
+}
+
+export function getNameRaces(payload){
+    return async function(dispatch){
+    try {
+        var json = await axios.get('http://localhost:3001/races?name=' + payload)
+        return dispatch({
+            type: GET_NAME_RACES,
+            payload: json.data
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
 }
