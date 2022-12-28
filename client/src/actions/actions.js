@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {GET_RACES,
     GET_TEMPERAMENTS,
-    FILTER_OF_TEMPERAMENTS} from './const'
+    FILTER_OF_TEMPERAMENTS,
+    FILTERED_RACES_CREATED,
+    ORDER_BY_NAME} from './const'
 
 export function getRaces(){
     return async function(dispatch){
@@ -24,8 +26,23 @@ export function getTemperaments(){
 }
 
 export function filterOfTemperaments(payload){
+    console.log(payload)
     return{
         type: FILTER_OF_TEMPERAMENTS,
+        payload
+    }
+}
+
+export function filteredRacesCreated(payload){
+    return{
+        type: FILTERED_RACES_CREATED,
+        payload
+    }
+}
+
+export function orderByname(payload){
+    return{
+        type: ORDER_BY_NAME,
         payload
     }
 }

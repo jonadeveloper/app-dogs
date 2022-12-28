@@ -18,6 +18,15 @@
     background-color: yellow;
 }
 
+.paginado ul li:hover{
+    background-color: black;
+    color: yellow;
+}
+
 .paginado ul li p{
     text-align: center;
+}
+
+.paginado ul li p:hover{
+    cursor: pointer;
 }

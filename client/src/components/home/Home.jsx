@@ -1,31 +1,38 @@
 import React from 'react';
 import { useState , useEffect } from 'react';
 import { useDispatch , useSelector } from 'react-redux';
-import { getRaces } from '../../actions/actions';
+import { getRaces,
+getTemperaments,
+filterOfTemperaments,
+filteredRacesCreated,
+orderByname } from '../../actions/actions';
 import { Link } from 'react-router-dom';
 import { Card } from '../card/Card';
 import style from './css/home.module.css';
-//import { Paginated } from '../paginated/Paginated';
+import { Paginated } from '../paginated/Paginated';
 
 
 export default function Home(){
     const dispatch = useDispatch();
     const allRaces = useSelector((state) => state.races);
     console.log(allRaces);
+    const allTempers = useSelector((state) => state.temperaments)
     const [currentPage , setCurrentPage] = useState(1);
     const [racesPerPage , setRacesPerPage] = useState(8);
     const lastIndex = currentPage * racesPerPage;
     console.log(lastIndex)
     const firstIndex = lastIndex - racesPerPage;
     console.log(firstIndex)
-    //const currentRaces = allRaces.slice(firstIndex,lastIndex);
+    const currentRaces = allRaces.slice(firstIndex,lastIndex);
+    const [orden,setOrden] = useState('');
 
     const paginado = (pn)=>{
         setCurrentPage(pn)
     };
  
     useEffect(()=>{
-        dispatch(getRaces())
+        dispatch(getRaces());
+        dispatch(getTemperaments());
     },[dispatch])
 
     function handleClick(e){
@@ -33,10 +40,27 @@ export default function Home(){
         dispatch(getRaces());
     }
 
+    function handleFilterTempers(e){
+        e.preventDefault();
+        dispatch(filterOfTemperaments(e.target.value));
+    }
+
+    function handleFilteredRacesCreated(e){
+        e.preventDefault();
+        dispatch(filteredRacesCreated(e.target.value))
+    }
+
+    function handleSort(e){
+        e.preventDefault();
+        dispatch(orderByname(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`);
+    }
+
     return(
         <div>
             <div>
-            <button className={style.btn} onClick={e => {handleClick(e)}}>Reload</button>
+            <button className={style.btn} onClick={(e) => {handleClick(e)}}>Reload</button>
             <Link to="/">
                 <button className={style.btn}>◀ Go back</button>
             </Link>
@@ -45,20 +69,23 @@ export default function Home(){
             </Link>
             </div>
             <div className="orders">
-                <select name="abc">
-                    <option value='asc_abc'>A - Z</option>
-                    <option value='desc_abc'>Z - A</option>
+                <select onChange={e => handleSort(e)}>
+                    <option value='asc'>A - Z</option>
+                    <option value='desc'>Z - A</option>
                 </select>
                 <select name="weight">
-                    <option value="asc_weight">from + to - weight</option>
-                    <option value="desc_weight">from - to + weight</option>
+                    <option value="asc">from + to - weight</option>
+                    <option value="desc">from - to + weight</option>
                 </select>
             </div>
             <div className="filters">
-                <select name="temperament"> 
+                <select onChange={e => handleFilterTempers(e)}> 
                     <option value="All">All temperaments</option>
+                    {allTempers.map(e => (
+                        <option value={e.name}>{e.name}</option>
+                    ))}
                 </select>
-                <select name="race">
+                <select onChange={e => handleFilteredRacesCreated(e)}>
                     <option value="all">All the races</option>
                     <option value="api">existing</option>
                     <option value="created">created</option>
@@ -66,14 +93,14 @@ export default function Home(){
             
             </div>
 
-            {/* <Paginated 
+            <Paginated 
             racesPerPage={racesPerPage}
             allRaces={allRaces.length}
             paginated={paginado}
-            /> */}
+            />
             
             <div>
-            {allRaces?.map((e) =>{
+            {currentRaces?.map((e) =>{
                     return(
                     <div> 
                         <Link to={'/home/' + e.id}>
