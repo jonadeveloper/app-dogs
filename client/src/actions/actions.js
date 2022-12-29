@@ -61,3 +61,11 @@ export function getNameRaces(payload){
     }
 }
 }
+
+export function postRace(payload){
+    return async function(dispatch){
+        const resp = await axios.post('http://localhost:3001/races',payload)
+        console.log(resp)
+        return resp;
+    }
+}

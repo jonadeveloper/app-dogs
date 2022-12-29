@@ -4,7 +4,8 @@ import {
     GET_TEMPERAMENTS,
     FILTERED_RACES_CREATED,
     ORDER_BY_NAME,
-    GET_NAME_RACES} from "../actions/const";
+    GET_NAME_RACES,
+    POST_RACE} from "../actions/const";
 
 const initialState = {
     races : [],
@@ -70,6 +71,10 @@ function rootReducer(state = initialState , action){
                 return{
                     ...state,
                     races: action.payload
+                }
+            case POST_RACE:
+                return{
+                    ...state
                 }
     
         default:
