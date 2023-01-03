@@ -4,13 +4,16 @@ import {
     GET_TEMPERAMENTS,
     FILTERED_RACES_CREATED,
     ORDER_BY_NAME,
+    ORDER_BY_WEIGHT,
     GET_NAME_RACES,
-    POST_RACE} from "../actions/const";
+    POST_RACE,
+GET_DETAILL} from "../actions/const";
 
 const initialState = {
     races : [],
     allRaces : [],
-    temperaments: []
+    temperaments: [],
+    detaill: []
 }
 
 
@@ -67,6 +70,31 @@ function rootReducer(state = initialState , action){
                     ...state,
                     races: sortArr
                 }
+            case ORDER_BY_WEIGHT:
+                let sortWeight = action.payload === 'asc' ?
+                state.races.sort(function (a,b){
+                    if(a.weight > b.weight){
+                        return 1
+                    }
+                    if(b.weight > a.weight){
+                        return -1
+                    }
+                    return 0
+                }):
+                state.races.sort(function (a,b){
+                    if(a.weight > b.weight){
+                        return -1
+                    }
+                    if(b.weight > a.weight){
+                        return 1
+                    }
+                    return 0
+                })
+                return{
+                    ...state,
+                    races: sortWeight
+                }
+
             case GET_NAME_RACES:
                 return{
                     ...state,
@@ -75,6 +103,11 @@ function rootReducer(state = initialState , action){
             case POST_RACE:
                 return{
                     ...state
+                }
+            case GET_DETAILL:
+                return{
+                    ...state,
+                    detaill: action.payload
                 }
     
         default:

@@ -75,9 +75,9 @@ export default function Home(){
                     <option value='asc'>A - Z</option>
                     <option value='desc'>Z - A</option>
                 </select>
-                <select name="weight">
-                    <option value="asc">from + to - weight</option>
-                    <option value="desc">from - to + weight</option>
+                <select onChange={e => handleSort(e)} name="weight">
+                    <option value="asc">from + weight</option>
+                    <option value="desc">from - weight</option>
                 </select>
             </div>
             <div className="filters">

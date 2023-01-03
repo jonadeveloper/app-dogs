@@ -4,7 +4,9 @@ import {GET_RACES,
     FILTER_OF_TEMPERAMENTS,
     FILTERED_RACES_CREATED,
     ORDER_BY_NAME,
-    GET_NAME_RACES} from './const'
+    ORDER_BY_WEIGHT,
+    GET_NAME_RACES,
+    GET_DETAILL} from './const'
 
 export function getRaces(){
     return async function(dispatch){
@@ -48,6 +50,13 @@ export function orderByname(payload){
     }
 }
 
+export function orderByWeight(payload){
+    return{
+        type: ORDER_BY_WEIGHT,
+        payload
+    }
+}
+
 export function getNameRaces(payload){
     return async function(dispatch){
     try {
@@ -68,4 +77,18 @@ export function postRace(payload){
         console.log(resp)
         return resp;
     }
+}
+
+export function getDetaill(id){
+        return async function(dispatch){
+            try {
+                let json = await axios.get('http://localhost:3001/races/' + id)
+                return dispatch({
+                    type: GET_DETAILL,
+                    payload: json.data
+                })
+            } catch (error) {
+                console.log(error)
+            }
+        }
 }

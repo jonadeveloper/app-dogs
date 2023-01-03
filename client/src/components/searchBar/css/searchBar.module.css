@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.header{
+    width: 100%;
+    height: 4rem;
+    background-color: yellow;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.15rem;
+    text-transform: capitalize;
+    text-shadow: 1.5px 1.5px rgb(153, 152, 152);
+}
+
+.input{
+    width: 13rem;
+    height: 2rem;
+    border: none;
+    border-radius: 7px 0px 0px 7px;
+}
+
+.input::placeholder{
+    text-align: center;
+}
+
+.input:focus{
+    outline: none;
+}
+
+input:focus::placeholder{
+    color: transparent;
+}
+
+.button{
+    width: 2.5rem;
+    height: 2.2rem;
+    border: none;
+    border-radius: 0px 7px 7px 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    background-color: black;
+    color: yellow;
+}
+
+.button:hover{
+    cursor: pointer;
+}
