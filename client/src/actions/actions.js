@@ -20,7 +20,7 @@ export function getRaces(){
 
 export function getTemperaments(){
     return async function(dispatch){
-    var jsonTemp = await axios.get('http://localhost:3001/tempers',{});
+    var jsonTemp = await axios.get('http://localhost:3001/tempers');
     return dispatch({
         type: GET_TEMPERAMENTS,
         payload: jsonTemp.data

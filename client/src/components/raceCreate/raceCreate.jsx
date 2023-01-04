@@ -2,6 +2,7 @@ import React , {useState , useEffect} from "react";
 import { Link , useHistory } from "react-router-dom";
 import { useDispatch , useSelector } from "react-redux";
 import { getTemperaments , postRace } from "../../actions/actions";
+import style from './css/raceCreate.module.css'
 
 function validate(input){
     let errors = {};
@@ -89,18 +90,21 @@ export default function RaceCreate(){
         <div>
             <div>
             <Link to="/home">
-                <button>◀ Go back</button>
+                <button className={style.btn}>◀ Go back</button>
             </Link>
             </div>
-            <div>
-            <h1>Crea una nueva raza de perro</h1>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <div className={style.container}>
+            <h1 className={style.title}>create a new breed of dog</h1>
+            <form className={style.form} onSubmit={(e) => handleSubmit(e)}>
                 <div>
-                    <label>Name:</label>
+                    <label>Name: </label>
+                    <br/>
                     <input type='text'
                     value={input.name}
                     name='name'
                     onChange={handleChange}
+                    required="required"
+                    className={errors.name ? style.inputError : style.input}
                     />
                     {errors.name && (
                         <p>{errors.name}</p>
@@ -108,11 +112,14 @@ export default function RaceCreate(){
                 </div>
                 <br/>
                 <div>
-                    <label>Height:</label>
+                    <label>Height: </label>
+                    <br/>
                     <input type='text'
                     value={input.height}
                     name='height'
                     onChange={handleChange}
+                    required="required"
+                    className={errors.height ? style.inputError : style.input}
                     />
                     {errors.height && (
                         <p>{errors.height}</p>
@@ -120,11 +127,14 @@ export default function RaceCreate(){
                 </div>
                 <br/>
                 <div>
-                    <label>Weight:</label>
+                    <label>Weight: </label>
+                    <br/>
                     <input type='text'
                     value={input.weight}
                     name='weight'
                     onChange={handleChange}
+                    required="required"
+                    className={errors.weight ? style.inputError : style.input}
                     />
                     {errors.weight && (
                         <p>{errors.weight}</p>
@@ -132,11 +142,14 @@ export default function RaceCreate(){
                 </div>
                 <br/>
                 <div>
-                    <label>Life expectancy:</label>
+                    <label>Life expectancy: </label>
+                    <br/>
                     <input type='text'
                     value={input.life_span}
                     name='life_span'
                     onChange={handleChange}
+                    required="required"
+                    className={errors.life_span ? style.inputError : style.input}
                     />
                     {errors.life_span && (
                         <p>{errors.life_span}</p>
@@ -144,7 +157,8 @@ export default function RaceCreate(){
                 </div>
                 <br/>
                 <div>
-                    <label>Temperaments:</label>
+                    <label>Temperaments: </label>
+                    <br/>
                     <select onChange={(e)=> handleSelect(e)}>
                     {tempers.map(n =>(
                         <option value={n.name}>{n.name}</option>
@@ -161,7 +175,7 @@ export default function RaceCreate(){
                 </div>
                 )}
                 <div>
-                    <button type="submit">crear</button>
+                    <button className={style.btnCreate} type="submit">create</button>
                 </div>
                 
             </form>

@@ -101,7 +101,7 @@ export default function Home(){
             paginated={paginado}
             />
             
-            <div>
+            <div className={style.divCards}>
             {currentRaces?.map((e) =>{
                     return(
                     <div> 
