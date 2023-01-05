@@ -16,6 +16,13 @@
     cursor: pointer;
 }
 
-.divCards{
+.containerCards{
+    width: fit-content;
+}
+
+.divCard{
     width: 300px;
+    display: block;
+    float: left;
+    margin: 10px 20px 10px 10px;
 }

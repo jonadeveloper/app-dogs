@@ -11,8 +11,8 @@ const getApiData = async() => {
         return {
             id: e.id,
             name: e.name,
-            height: e.height.imperial,
-            weight: e.weight.imperial,
+            height: e.height.metric,
+            weight: e.weight.metric,
             life_span: e.life_span,
             img: e.image.url,
             temper: e.temperament
@@ -75,6 +75,7 @@ router.post('/' , async (req,res) =>{
         name,
         height,
         weight,
+        img,
         life_span,
         createInDb,
         temper} = req.body;
@@ -83,6 +84,7 @@ router.post('/' , async (req,res) =>{
             name,
             height,
             weight,
+            img,
             life_span,
             createInDb
         })

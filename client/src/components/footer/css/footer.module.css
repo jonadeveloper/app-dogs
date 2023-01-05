@@ -1,0 +1,12 @@
+.footer{
+    width: 100%;
+    height: 100px;
+    background-color: rgb(58, 58, 58);
+    display: flex;
+}
+
+.footer p{
+    margin: 0 auto;
+    color: white;
+    padding: 50px;
+}

@@ -71,28 +71,11 @@ function rootReducer(state = initialState , action){
                     races: sortArr
                 }
             case ORDER_BY_WEIGHT:
-                let sortWeight = action.payload === 'asc' ?
-                state.races.sort(function (a,b){
-                    if(a.weight > b.weight){
-                        return 1
-                    }
-                    if(b.weight > a.weight){
-                        return -1
-                    }
-                    return 0
-                }):
-                state.races.sort(function (a,b){
-                    if(a.weight > b.weight){
-                        return -1
-                    }
-                    if(b.weight > a.weight){
-                        return 1
-                    }
-                    return 0
-                })
+                
                 return{
                     ...state,
-                    races: sortWeight
+                    races: action.payload === 'desc' ? state.allRaces.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3))) :
+                    state.allRaces.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3)))
                 }
 
             case GET_NAME_RACES:

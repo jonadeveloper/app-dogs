@@ -11,6 +11,7 @@ import { Card } from '../card/Card';
 import style from './css/home.module.css';
 import { Paginated } from '../paginated/Paginated';
 import SearchBar from '../searchBar/SearchBar';
+import Footer from '../footer/Footer';
 
 
 export default function Home(){
@@ -71,23 +72,29 @@ export default function Home(){
             </Link>
             </div>
             <div className="orders">
+                <span>order alphabetically : </span>
                 <select onChange={e => handleSort(e)}>
+                    <option>select an option</option>
                     <option value='asc'>A - Z</option>
                     <option value='desc'>Z - A</option>
                 </select>
+                <span>sort by weight : </span>
                 <select onChange={e => handleSort(e)} name="weight">
-                    <option value="asc">from + weight</option>
-                    <option value="desc">from - weight</option>
+                    <option>select an option</option>
+                    <option value="asc">min to max</option>
+                    <option value="desc">max to min</option>
                 </select>
             </div>
             <div className="filters">
                 <select onChange={e => handleFilterTempers(e)}> 
+                    <option>select an option</option>
                     <option value="All">All temperaments</option>
                     {allTempers.map(e => (
                         <option value={e.name}>{e.name}</option>
                     ))}
                 </select>
                 <select onChange={e => handleFilteredRacesCreated(e)}>
+                    <option>select an option</option>
                     <option value="all">All the races</option>
                     <option value="api">existing</option>
                     <option value="created">created</option>
@@ -101,10 +108,10 @@ export default function Home(){
             paginated={paginado}
             />
             
-            <div className={style.divCards}>
+            <div className={style.containerCards}>
             {currentRaces?.map((e) =>{
                     return(
-                    <div> 
+                    <div className={style.divCard}> 
                         <Link to={'/home/' + e.id}>
                         <Card 
                         key={e.id}
@@ -117,6 +124,7 @@ export default function Home(){
                     </div>)
                 })
             }
+            <Footer />
             </div>
         </div>
     )
