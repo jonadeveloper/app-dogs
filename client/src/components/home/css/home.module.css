@@ -20,6 +20,34 @@
     width: fit-content;
 }
 
+.containFiltersAndOders{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.nameOrder{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    color: yellow;
+    margin-left: 30px;
+}
+
+.selectOrder{
+    margin: 10px;
+}
+
+.nameFilter{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    color: yellow;
+    margin-left: 30px;
+}
+
+.selectFilter{
+    margin: 10px;
+}
+
 .divCard{
     width: 300px;
     display: block;

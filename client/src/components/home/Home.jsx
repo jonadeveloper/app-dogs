@@ -71,35 +71,39 @@ export default function Home(){
                 <button className={style.btn}>Create new race</button>
             </Link>
             </div>
-            <div className="orders">
-                <span>order alphabetically : </span>
-                <select onChange={e => handleSort(e)}>
+            <div>
+            <div  className={style.containFiltersAndOders}>
+                <span className={style.nameOrder}>order alphabetically : </span>
+                <select className={style.selectOder} onChange={e => handleSort(e)}>
                     <option>select an option</option>
                     <option value='asc'>A - Z</option>
                     <option value='desc'>Z - A</option>
                 </select>
-                <span>sort by weight : </span>
-                <select onChange={e => handleSort(e)} name="weight">
+                <span className={style.nameOrder}>sort by weight : </span>
+                <select className={style.selectOder} onChange={e => handleSort(e)} name="weight">
                     <option>select an option</option>
                     <option value="asc">min to max</option>
                     <option value="desc">max to min</option>
                 </select>
             </div>
-            <div className="filters">
-                <select onChange={e => handleFilterTempers(e)}> 
+            <div  className={style.containFiltersAndOders}>
+                <span className={style.nameFilter}>filter by temperaments : </span>
+                <select className={style.selectFilter} onChange={e => handleFilterTempers(e)}> 
                     <option>select an option</option>
                     <option value="All">All temperaments</option>
                     {allTempers.map(e => (
                         <option value={e.name}>{e.name}</option>
                     ))}
                 </select>
-                <select onChange={e => handleFilteredRacesCreated(e)}>
+                <span className={style.nameFilter}>filter by existing or created : </span>
+                <select className={style.selectFilter} onChange={e => handleFilteredRacesCreated(e)}>
                     <option>select an option</option>
                     <option value="all">All the races</option>
                     <option value="api">existing</option>
                     <option value="created">created</option>
                 </select>
             
+            </div>
             </div>
 
             <Paginated 
