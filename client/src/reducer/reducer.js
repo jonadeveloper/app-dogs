@@ -18,6 +18,7 @@ const initialState = {
 
 
 function rootReducer(state = initialState , action){
+    var orderRace;
     switch (action.type) {
         case GET_RACES:
             return{
@@ -71,11 +72,31 @@ function rootReducer(state = initialState , action){
                     races: sortArr
                 }
             case ORDER_BY_WEIGHT:
-                
+                if(action.payload === "asc"){
+                        orderRace = state.allRaces.sort(function(a,b){
+                        if (parseInt(a.maxWeight) > parseInt(b.maxWeight)){
+                            return 1
+                        }
+                        if (parseInt(b.maxWeight) > parseInt(a.maxWeight)){
+                            return -1
+                        }
+                        return 0;
+                    })
+                }else if(action.payload === "desc"){
+                        orderRace = state.allRaces.sort(function (a,b){
+                            if (parseInt(a.maxWeight) > parseInt(b.maxWeight)){
+                                return -1
+                            }
+                            if (parseInt(b.maxWeight) > parseInt(a.maxWeight)){
+                                return 1
+                            }
+                            return 0;
+
+                        })
+                }
                 return{
                     ...state,
-                    races: action.payload === 'desc' ? state.allRaces.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3))) :
-                    state.allRaces.sort((a,b) => parseInt(b.weight.metric.slice(0, 3)) - parseInt(a.weight.metric.slice(0, 3)))
+                    allRaces: orderRace
                 }
 
             case GET_NAME_RACES:

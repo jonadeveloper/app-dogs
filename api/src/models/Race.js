@@ -16,11 +16,19 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
           },
-        height: {
+        minHeight: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        weight: {
+        maxHeight: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        minWeight: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        maxWeight: {
             type: DataTypes.STRING,
             allowNull: false
         },

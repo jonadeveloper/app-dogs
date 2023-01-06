@@ -11,8 +11,10 @@ const getApiData = async() => {
         return {
             id: e.id,
             name: e.name,
-            height: e.height.metric,
-            weight: e.weight.metric,
+            minHeight: e.height.metric.split(" - ")[0],
+            maxHeight: e.height.metric.split(" - ")[1],
+            minWeight: e.weight.metric.split(" - ")[0],
+            maxWeight: e.height.metric.split(" - ")[1],
             life_span: e.life_span,
             img: e.image.url,
             temper: e.temperament

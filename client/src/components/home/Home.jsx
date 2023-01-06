@@ -5,7 +5,8 @@ import { getRaces,
 getTemperaments,
 filterOfTemperaments,
 filteredRacesCreated,
-orderByname } from '../../actions/actions';
+orderByname, 
+orderByWeight} from '../../actions/actions';
 import { Link } from 'react-router-dom';
 import { Card } from '../card/Card';
 import style from './css/home.module.css';
@@ -59,6 +60,13 @@ export default function Home(){
         setOrden(`Ordenado ${e.target.value}`);
     }
 
+    function handleSortWeight(e){
+        e.preventDefault();
+        dispatch(orderByWeight(e.target.value));
+        setCurrentPage(1);
+        setOrden(`Ordenado ${e.target.value}`);
+    }
+
     return(
         <div>
             <SearchBar />
@@ -80,7 +88,7 @@ export default function Home(){
                     <option value='desc'>Z - A</option>
                 </select>
                 <span className={style.nameOrder}>sort by weight : </span>
-                <select className={style.selectOder} onChange={e => handleSort(e)} name="weight">
+                <select className={style.selectOder} onChange={e => handleSortWeight(e)} name="weight">
                     <option>select an option</option>
                     <option value="asc">min to max</option>
                     <option value="desc">max to min</option>
@@ -121,7 +129,8 @@ export default function Home(){
                         key={e.id}
                         name={e.name}
                         img={e.img}
-                        weight={e.weight}
+                        minWeight={e.minWeight}
+                        maxWeight={e.maxWeight}
                         temper={e.temper}
                         />
                         </Link>
