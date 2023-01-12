@@ -68,7 +68,7 @@
 }
 
 .btnCreate{
-    margin: 1rem;
+    margin: 2rem;
     padding: 2px;
     width: 150px;
     height: 30px;
@@ -87,4 +87,16 @@
 }
 .btnDis{
     display: none;
+}
+
+.pTemp{
+    display: inline-flex;
+    height: 30px;
+    width: fit-content;
+    align-items: center;
+    background-color: black;
+    color:white;
+    margin: 10px;
+    padding: 2px;
+    border-radius: 0.5rem;
 }

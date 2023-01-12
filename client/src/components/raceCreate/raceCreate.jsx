@@ -253,12 +253,6 @@ export default function RaceCreate(){
                         <p>{errors.tempererament}</p>
                     )}
                 </div>
-                {input.temperament.map(e => 
-                <div>
-                    <p>{e}</p>
-                    <button onClick={()=> handleDelete(e)}>X</button>
-                </div>
-                )}
                 <div>
                     <button 
                     className={ 
@@ -271,11 +265,18 @@ export default function RaceCreate(){
                         && errors.life_span ? style.btnDis : style.btnCreate
                         && input.temperament.length === 0 ? style.btnDis : style.btnCreate
                     }
-                     type="submit"
+                    type="submit"
                     >create</button>
-                </div>
-                
+                </div>               
             </form>
+                    <div>
+                    {input.temperament.map(e => 
+                    <div className={style.pTemp}>
+                        <p>{e}</p>
+                        <button onClick={()=> handleDelete(e)}>X</button>
+                    </div>
+                    )}
+                </div>
             </div>
         </div>
     )
