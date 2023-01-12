@@ -37,6 +37,7 @@ export default function Home(){
         dispatch(getRaces());
         dispatch(getTemperaments());
     },[dispatch])
+    
 
     function handleClick(e){
         e.preventDefault();
@@ -99,14 +100,14 @@ export default function Home(){
                 <select className={style.selectFilter} onChange={e => handleFilterTempers(e)}> 
                     <option>select an option</option>
                     <option value="All">All temperaments</option>
-                    {allTempers.map(e => (
+                    {allTempers?.map(e => (
                         <option value={e.name}>{e.name}</option>
                     ))}
                 </select>
                 <span className={style.nameFilter}>filter by existing or created : </span>
                 <select className={style.selectFilter} onChange={e => handleFilteredRacesCreated(e)}>
                     <option>select an option</option>
-                    <option value="all">All the races</option>
+                    <option value="All">All the races</option>
                     <option value="api">existing</option>
                     <option value="created">created</option>
                 </select>
@@ -130,14 +131,12 @@ export default function Home(){
                         name={e.name}
                         img={e.img}
                         minWeight={e.minWeight}
-                        maxWeight={e.maxWeight}
-                        temper={e.temper}
+                        temperament={e.temperament}
                         />
                         </Link>
                     </div>)
                 })
             }
-            <Footer />
             </div>
         </div>
     )

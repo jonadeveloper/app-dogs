@@ -26,16 +26,17 @@ export default function Detaill(props){
                 <div className={style.cardDetaill}>
                     <h1 className={style.title}>{myRace[0].name}</h1>
                     <img className={style.img} src={myRace[0].img} alt='not found' width='350px'/>
-                    <h3>Height : {myRace[0].height} cm</h3>
-                    <h3>Weight : {myRace[0].weight} kg</h3>
+                    <h3>min-Height : {myRace[0].minHeight} cm</h3>
+                    <h3>max-Height : {myRace[0].maxHeight} cm</h3>
+                    <h3>min-Weight : {myRace[0].minWeight} kg</h3>
+                    <h3>max-Weight : {myRace[0].maxWeight} kg</h3>
                     <h3>Life expectancy : {myRace[0].life_span}</h3>
-                    <h3>Temperament : {myRace[0].temper}</h3>
+                    <h3>Temperament : {myRace[0].temperament}</h3>
                 </div>
                 :
                 <h1>Loading...</h1>
             }
             <br/>
-        <Footer />
         </div>
     )
 

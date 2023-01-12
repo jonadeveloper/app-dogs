@@ -34,18 +34,18 @@ function rootReducer(state = initialState , action){
             case FILTER_OF_TEMPERAMENTS:
                 const allRaces = state.allRaces;
                 const tempersFiltered = action.payload === 'All' ? allRaces
-                : allRaces.filter(n => n.temper.includes(action.payload))
+                : allRaces.filter((n) => n.temperament.includes(action.payload))
                 return{
                     ...state,
                     races: tempersFiltered
                 }
             case FILTERED_RACES_CREATED:
                 const AllRaces = state.allRaces;
-                const createdFilter = action.payload === 'created' ? AllRaces.filter(e => e.createInDb) 
-                : AllRaces.filter(e => !e.createInDb)
+                const createdFilter = action.payload === 'api' ? AllRaces.filter(e => e.id <= 300) 
+                : AllRaces.filter(e => e.id.length >= 4)
                 return{
                     ...state,
-                    races : action.payload === 'All' ? state.allRaces : createdFilter
+                    races : action.payload === 'All' ? AllRaces.concat(createdFilter) : createdFilter
                 }
             case ORDER_BY_NAME:
                 let sortArr = action.payload === 'asc' ?
@@ -74,20 +74,20 @@ function rootReducer(state = initialState , action){
             case ORDER_BY_WEIGHT:
                 if(action.payload === "asc"){
                         orderRace = state.allRaces.sort(function(a,b){
-                        if (parseInt(a.maxWeight) > parseInt(b.maxWeight)){
+                        if (parseInt(a.minWeight) > parseInt(b.minWeight)){
                             return 1
                         }
-                        if (parseInt(b.maxWeight) > parseInt(a.maxWeight)){
+                        if (parseInt(b.minWeight) > parseInt(a.minWeight)){
                             return -1
                         }
                         return 0;
                     })
                 }else if(action.payload === "desc"){
                         orderRace = state.allRaces.sort(function (a,b){
-                            if (parseInt(a.maxWeight) > parseInt(b.maxWeight)){
+                            if (parseInt(a.minWeight) > parseInt(b.minWeight)){
                                 return -1
                             }
-                            if (parseInt(b.maxWeight) > parseInt(a.maxWeight)){
+                            if (parseInt(b.minWeight) > parseInt(a.minWeight)){
                                 return 1
                             }
                             return 0;

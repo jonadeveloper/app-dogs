@@ -19,7 +19,7 @@
 }
 
 .container{
-    width: 600px;
+    width: 900px;
     height: fit-content;
     background-color: yellow;
     border: none;
@@ -84,4 +84,7 @@
     border: 2px solid black;
     background-color: rgb(59, 58, 58);
     color: yellow;
+}
+.btnDis{
+    display: none;
 }

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Race , Temper } = require('../../db')
+const { Race , Temperament } = require('../../db')
 const axios = require('axios');
 
 const router = Router();
@@ -7,7 +7,8 @@ const router = Router();
 
 const getApiData = async() => {
     const apiUrl = await axios.get('https://api.thedogapi.com/v1/breeds')
-    const infoApi = await apiUrl.data.map(e => {
+    let filterRace = apiUrl.data.filter((race)=> race.weight.metric !== ("NaN") && race.temperament)
+    const infoApi = await filterRace.map(e => {
         return {
             id: e.id,
             name: e.name,
@@ -17,22 +18,33 @@ const getApiData = async() => {
             maxWeight: e.height.metric.split(" - ")[1],
             life_span: e.life_span,
             img: e.image.url,
-            temper: e.temperament
+            temperament: e.temperament
         }
     })
     return infoApi;
 }
 
 const getDbData = async () => {
-    return await Race.findAll({
+    let raceDb = await Race.findAll({
         include: {
-            model: Temper,
+            model: Temperament,
             attributes: ['name'],
             through: {
-                attributes: []
-            }
+                attributes: [],
+            },
         }
     })
+    return raceDb.map(e =>({
+        id: e.id,
+        name: e.name,
+        minHeight: e.minHeight,
+        maxHeight: e.maxHeight,
+        minWeight: e.minWeight,
+        maxWeight: e.maxWeight,
+        life_span: e.life_span,
+        img: e.img,
+        temperament: e.temperaments.map(t => t.name).join(", "),
+    }))
 }
 
 const getAllRace = async () => {
@@ -42,10 +54,11 @@ const getAllRace = async () => {
     return totalData;
 }
 
-router.get('/' , async (req,res) =>{
+router.get('/' , async (req,res,next) =>{
+    const name = req.query.name;
+    const raceTotal = await getAllRace();
+    const keys = ["name"]
     try {    
-        const name = req.query.name;
-        const raceTotal = await getAllRace();
         if(name){
             let raceName = await raceTotal.filter(e=>e.name.toLowerCase().includes(name.toLowerCase()))
             raceName.length ?
@@ -55,7 +68,7 @@ router.get('/' , async (req,res) =>{
             res.status(200).send(raceTotal);
         }
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 })
 
@@ -72,30 +85,34 @@ router.get('/:id' , async (req,res)=>{
 })
 
 router.post('/' , async (req,res) =>{
+    const {
+    name,
+    minHeight,
+    maxHeight,
+    minWeight,
+    maxWeight,
+    img,
+    life_span,
+    createInDb,
+    temperament} = req.body;
     try {       
-        let {
-        name,
-        height,
-        weight,
-        img,
-        life_span,
-        createInDb,
-        temper} = req.body;
     
         let raceCreated = await Race.create ({
             name,
-            height,
-            weight,
+            minHeight,
+            maxHeight,
+            minWeight,
+            maxWeight,
             img,
             life_span,
             createInDb
         })
     
-        let temperDb = await Temper.findAll({
-            where: { name : temper}
+        let temperamentDb = await Temperament.findAll({
+            where: { name : temperament}
         })
     
-        raceCreated.addTempers(temperDb)
+        raceCreated.addTemperament(temperamentDb)
         res.status(200).send('Nueva raza creada')
     } catch (error) {
         console.log(error)

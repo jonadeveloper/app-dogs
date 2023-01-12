@@ -4,22 +4,63 @@ import { useDispatch , useSelector } from "react-redux";
 import { getTemperaments , postRace } from "../../actions/actions";
 import style from './css/raceCreate.module.css'
 
+const exp = {
+    nameExp: /^[A-Za-z\s]*$/,
+    numbExp: /^\d+$/,
+    lifeExp : /^[0-9]{1,2}(-[0-9]{1,2})?$/,
+    urlExp : /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+}
+
 function validate(input){
     let errors = {};
     if(!input.name){
-        errors.name = 'a name is required'
+        errors.name = 'breed name is required'
+    }else if(!input.name.match(exp.nameExp)){
+        errors.name = 'numbers are not allowed'
     }
-    if(!input.height){
-        errors.height = 'a height is required'
+
+    if(!input.img){
+        errors.img = 'an image is required'
+    }else if(!input.img.match(exp.urlExp)){
+        errors.img = 'only image url is allowed'
     }
-    if(!input.weight){
-        errors.weight = 'a weight is required'
+
+    if(!input.minHeight){
+        errors.minHeight = 'you must enter minimum height'
+    }else if(!input.minHeight.match(exp.numbExp)){
+       errors.minHeight = 'only numbers are allowed'
     }
+
+    if(!input.maxHeight){
+        errors.maxHeight = 'you must enter maximum height'
+    }else if(!input.maxHeight.match(exp.numbExp)){
+       errors.maxHeight = 'only numbers are allowed'
+    }else if(input.maxHeight <= input.minHeight){
+        errors.maxHeight = "the maximum height must be greater than the minimum"
+    }
+
+    if(!input.minWeight){
+        errors.minWeight = 'you must enter minimum weight'
+    }else if(!input.minWeight.match(exp.numbExp)){
+        errors.minWeight = 'only numbers are allowed'
+    }
+
+    if(!input.maxWeight){
+        errors.maxWeight = 'you must enter maximum weight'
+    }else if(!input.maxWeight.match(exp.numbExp)){
+        errors.maxWeight = 'only numbers are allowed'
+     }else if(input.maxWeight <= input.minWeight){
+        errors.maxWeight = "the maximum weight must be greater than the minimum"
+    }
+
     if(!input.life_span){
         errors.life_span = 'you must enter life expectancy'
+    }else if(!input.life_span.match(exp.lifeExp)){
+        errors.life_span = 'must be entered in this format [12-34] maximum 2 digits per parameter'
     }
-    if(!input.temper){
-        errors.temper = 'at least one temperament is required'
+
+    if(!input.temperament){
+        errors.temperament = 'at least one temperament is required'
     }
 
     return errors;
@@ -32,10 +73,13 @@ export default function RaceCreate(){
     const [errors,setErrors] = useState({});
     const [input , setInput] = useState({
         name : '',
-        height: '',
-        weight: '',
+        img: '',
+        minHeight: '',
+        maxHeight: '',
+        minWeight: '',
+        maxWeight: '',
         life_span: '',
-        temper: []
+        temperament: []
     })
 
     function handleChange(e){
@@ -52,11 +96,11 @@ export default function RaceCreate(){
     function handleSelect(e){
         setInput({
             ...input,
-            temper: [...input.temper,e.target.value]
+            temperament: [...input.temperament,e.target.value]
         })
         setErrors(validate({
             ...input,
-            temper : [...input.temper, e.target.value]
+            temperament : [...input.temperament, e.target.value]
         }))
     }
 
@@ -67,10 +111,13 @@ export default function RaceCreate(){
         alert('new breed successfully created!!!')
         setInput({
         name : '',
-        height: '',
-        weight: '',
+        img: '',
+        minHeight: '',
+        maxHeight: '',
+        minWeight: '',
+        maxWeight: '',
         life_span: '',
-        temper: []
+        temperament: []
         })
         history.push('/home')
     }
@@ -78,7 +125,7 @@ export default function RaceCreate(){
     function handleDelete(e){
         setInput({
             ...input,
-            temper: input.temper.filter(tem => tem !== e)
+            temperament: input.temperament.filter(tem => tem !== e)
         })
     }
 
@@ -103,7 +150,6 @@ export default function RaceCreate(){
                     value={input.name}
                     name='name'
                     onChange={handleChange}
-                    required="required"
                     className={errors.name ? style.inputError : style.input}
                     />
                     {errors.name && (
@@ -112,32 +158,72 @@ export default function RaceCreate(){
                 </div>
                 <br/>
                 <div>
-                    <label>Height: </label>
+                    <label>image: </label>
                     <br/>
                     <input type='text'
-                    value={input.height}
-                    name='height'
+                    value={input.img}
+                    name='img'
                     onChange={handleChange}
-                    required="required"
-                    className={errors.height ? style.inputError : style.input}
+                    className={errors.img ? style.inputError : style.input}
                     />
-                    {errors.height && (
-                        <p>{errors.height}</p>
+                    {errors.img && (
+                        <p>{errors.img}</p>
                     )}
                 </div>
                 <br/>
                 <div>
-                    <label>Weight: </label>
+                    <label>min-Height: </label>
+                    <br/>
+                    <input type='text'
+                    value={input.minHeight}
+                    name='minHeight'
+                    onChange={handleChange}
+                    className={errors.minHeight ? style.inputError : style.input}
+                    />
+                    {errors.minHeight && (
+                        <p>{errors.minHeight}</p>
+                    )}
+                </div>
+                <br/>
+                <div>
+                    <label>max-Height: </label>
+                    <br/>
+                    <input type='text'
+                    value={input.height}
+                    name='maxHeight'
+                    onChange={handleChange}
+                    className={errors.maxHeight ? style.inputError : style.input}
+                    />
+                    {errors.maxHeight && (
+                        <p>{errors.maxHeight}</p>
+                    )}
+                </div>
+                <br/>
+                <div>
+                    <label>min-Weight: </label>
                     <br/>
                     <input type='text'
                     value={input.weight}
-                    name='weight'
+                    name='minWeight'
                     onChange={handleChange}
-                    required="required"
-                    className={errors.weight ? style.inputError : style.input}
+                    className={errors.minWeight ? style.inputError : style.input}
                     />
-                    {errors.weight && (
-                        <p>{errors.weight}</p>
+                    {errors.minWeight && (
+                        <p>{errors.minWeight}</p>
+                    )}
+                </div>
+                <br/>
+                <div>
+                    <label>max-Weight: </label>
+                    <br/>
+                    <input type='text'
+                    value={input.weight}
+                    name='maxWeight'
+                    onChange={handleChange}
+                    className={errors.maxWeight ? style.inputError : style.input}
+                    />
+                    {errors.maxWeight && (
+                        <p>{errors.maxWeight}</p>
                     )}
                 </div>
                 <br/>
@@ -148,7 +234,6 @@ export default function RaceCreate(){
                     value={input.life_span}
                     name='life_span'
                     onChange={handleChange}
-                    required="required"
                     className={errors.life_span ? style.inputError : style.input}
                     />
                     {errors.life_span && (
@@ -164,18 +249,30 @@ export default function RaceCreate(){
                         <option value={n.name}>{n.name}</option>
                     ))}
                     </select>
-                    {errors.temper && (
-                        <p>{errors.temper}</p>
+                    {errors.temperament && (
+                        <p>{errors.tempererament}</p>
                     )}
                 </div>
-                {input.temper.map(e => 
+                {input.temperament.map(e => 
                 <div>
                     <p>{e}</p>
                     <button onClick={()=> handleDelete(e)}>X</button>
                 </div>
                 )}
                 <div>
-                    <button className={style.btnCreate} type="submit">create</button>
+                    <button 
+                    className={ 
+                        errors.name ? style.btnDis : style.btnCreate && 
+                        errors.img ? style.btnDis : style.btnCreate && 
+                        errors.minHeight ? style.btnDis : style.btnCreate
+                        && errors.maxHeight ? style.btnDis : style.btnCreate
+                        && errors.minWeight ? style.btnDis : style.btnCreate
+                        && errors.maxWeight ? style.btnDis : style.btnCreate
+                        && errors.life_span ? style.btnDis : style.btnCreate
+                        && input.temperament.length === 0 ? style.btnDis : style.btnCreate
+                    }
+                     type="submit"
+                    >create</button>
                 </div>
                 
             </form>
